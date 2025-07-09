@@ -7,7 +7,7 @@ LunchCode is a lightweight, self-hosted platform for practicing coding interview
 ### 🚀 Why LunchCode?
 
 * 📦 **Self-contained & offline**: Clone, install, and serve locally. No constant internet connection required.
-* 🧑‍💻 **Multi-language support**: Practice in C, C++, Java, JavaScript, or Python.
+* 🧑‍💻 **Python focused**: Initial release supports solving problems in Python.
 * 📖 **Curated problem sets**: Includes problems, solutions, walk-through tutorials, and test cases.
 * 📊 **Feedback metrics**: Evaluate submissions with runtime and memory usage reports.
 * 🌐 **Browser-based UI**: Access the interface easily in your local browser.
@@ -19,26 +19,27 @@ Whether you’re on a flight, in a remote location, or just want a distraction-f
 
 * ✅ Problem sets with detailed solutions and discussions
 * ✅ Test case evaluation with runtime & memory profiling
-* ✅ Multi-language support (C, C++, Java, JavaScript, Python)
+* ✅ Python solution evaluation
 * ✅ Clean, offline-capable browser UI
 * ✅ Customizable problem lists for focused drills
 
 ## 📦 Installation
 
-*(Coming soon)*
+Install Python 3.8+ and run the web server:
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/lunchcode.git
+cd lunchcode
 
 # Install dependencies
-...
+pip install -r requirements.txt
 
-# Serve locally
-...
+# Start the app
+python app.py
 ```
 
-Access LunchCode in your browser at `http://localhost:PORT`.
+Access LunchCode in your browser at `http://localhost:5000`.
 
 ## 💡 Vision
 

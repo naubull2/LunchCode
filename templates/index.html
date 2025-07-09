@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>LunchCode</title>
+</head>
+<body>
+    <h1>LunchCode Problems</h1>
+    <ul>
+    {% for p in problems %}
+      <li><a href="/problem/{{ p }}">{{ p }}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
