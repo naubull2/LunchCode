@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ problem }} - LunchCode</title>
+    <style>
+      textarea { width: 100%; height: 200px; }
+      pre { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <a href="/">&lt; Back</a>
+    <h1>{{ problem }}</h1>
+    <pre id="description">{{ description }}</pre>
+    <h2>Solution</h2>
+    <textarea id="code">def solve():\n    pass</textarea>
+    <br>
+    <button id="run">Run Tests</button>
+    <pre id="output"></pre>
+<script>
+  document.getElementById('run').addEventListener('click', function() {
+    const code = document.getElementById('code').value;
+    fetch('/api/evaluate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({problem: '{{ problem }}', code: code})
+    }).then(r => r.json()).then(res => {
+      const out = document.getElementById('output');
+      if (res.error) {
+        out.textContent = 'Error: ' + res.error;
+        return;
+      }
+      let text = `Passed ${res.passed}/${res.total} tests\n`;
+      res.results.forEach(r => {
+        if (r.error) {
+          text += `Test ${r.test}: ERROR ${r.error}\n`;
+        } else {
+          text += `Test ${r.test}: ${r.pass ? 'PASSED' : 'FAILED'} (expected ${r.expected}, got ${r.result})\n`;
+        }
+      });
+      out.textContent = text;
+    });
+  });
+</script>
+</body>
+</html>
