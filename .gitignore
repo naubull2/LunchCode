@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.envrc
+.venv/
+pip-wheel-metadata/
+
+# Python egg metadata
+*.egg-info/
+dist/
+build/
+
+# Node modules
+node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# Dependency lock files (if using Yarn/PNPM)
+.pnpm-debug.log
+yarn-error.log
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# VSCode
+.vscode/
+
+# Docker
+*.log
+docker-compose.override.yml
