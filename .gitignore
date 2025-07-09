@@ -12,8 +12,6 @@ pip-wheel-metadata/
 
 # Python egg metadata
 *.egg-info/
-dist/
-build/
 
 # Node modules
 node_modules/
