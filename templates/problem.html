@@ -3,44 +3,90 @@
 <head>
     <meta charset="utf-8">
     <title>{{ problem }} - LunchCode</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+    <link rel="stylesheet" id="theme-link" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/eclipse.min.css">
     <style>
-      textarea { width: 100%; height: 200px; }
-      pre { white-space: pre-wrap; }
+      body { padding: 2rem; }
+      #output { white-space: pre-wrap; }
+      .CodeMirror { height: 300px; }
     </style>
 </head>
 <body>
+<div class="container">
     <a href="/">&lt; Back</a>
-    <h1>{{ problem }}</h1>
-    <pre id="description">{{ description }}</pre>
-    <h2>Solution</h2>
+    <h1 class="mt-2 mb-3">{{ problem }}</h1>
+    <pre id="description" class="p-3 border bg-light">{{ description }}</pre>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <label for="language-select" class="form-label">Language</label>
+            <select id="language-select" class="form-select mb-2">
+                <option value="python" selected>Python 3</option>
+                <option disabled>C</option>
+                <option disabled>C++</option>
+                <option disabled>JavaScript</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="theme-select" class="form-label">Editor Theme</label>
+            <select id="theme-select" class="form-select mb-2">
+                <option value="eclipse" selected>Light</option>
+                <option value="solarized dark">Solarized Dark</option>
+            </select>
+        </div>
+    </div>
     <textarea id="code">def solve():\n    pass</textarea>
-    <br>
-    <button id="run">Run Tests</button>
-    <pre id="output"></pre>
+    <div class="mt-2">
+        <button id="run" class="btn btn-primary">Test</button>
+        <button id="submit" class="btn btn-success ms-2">Submit</button>
+    </div>
+    <pre id="output" class="mt-3"></pre>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/python/python.min.js"></script>
 <script>
+  var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+      lineNumbers: true,
+      mode: 'python',
+      theme: 'eclipse'
+  });
+  document.getElementById('theme-select').addEventListener('change', function() {
+      var theme = this.value;
+      editor.setOption('theme', theme);
+      document.getElementById('theme-link').href = 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/' + theme.replace(' ', '-') + '.min.css';
+  });
   document.getElementById('run').addEventListener('click', function() {
-    const code = document.getElementById('code').value;
-    fetch('/api/evaluate', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({problem: '{{ problem }}', code: code})
-    }).then(r => r.json()).then(res => {
+      const code = editor.getValue();
+      fetch('/api/evaluate', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({problem: '{{ problem }}', code: code})
+      }).then(r => r.json()).then(showResult);
+  });
+  document.getElementById('submit').addEventListener('click', function() {
+      const code = editor.getValue();
+      fetch('/api/submit', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({problem: '{{ problem }}', code: code})
+      }).then(r => r.json()).then(showResult);
+  });
+  function showResult(res) {
       const out = document.getElementById('output');
       if (res.error) {
-        out.textContent = 'Error: ' + res.error;
-        return;
+          out.textContent = 'Error: ' + res.error;
+          return;
       }
       let text = `Passed ${res.passed}/${res.total} tests\n`;
       res.results.forEach(r => {
-        if (r.error) {
-          text += `Test ${r.test}: ERROR ${r.error}\n`;
-        } else {
-          text += `Test ${r.test}: ${r.pass ? 'PASSED' : 'FAILED'} (expected ${r.expected}, got ${r.result})\n`;
-        }
+          if (r.error) {
+              text += `Test ${r.test}: ERROR ${r.error}\n`;
+          } else {
+              text += `Test ${r.test}: ${r.pass ? 'PASSED' : 'FAILED'} (expected ${r.expected}, got ${r.result}) - ${r.time.toFixed(4)}s\n`;
+          }
       });
       out.textContent = text;
-    });
-  });
+  }
 </script>
 </body>
 </html>

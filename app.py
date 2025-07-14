@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import json
 import os
+import time
 
 app = Flask(__name__)
 
@@ -24,6 +25,44 @@ def load_tests(problem):
         return json.load(f)
 
 
+def load_submit_tests(problem):
+    """Load additional tests used for final submission."""
+    path = os.path.join(PROBLEMS_DIR, problem, 'submit_tests.json')
+    if os.path.exists(path):
+        with open(path) as f:
+            return json.load(f)
+    return load_tests(problem)
+
+
+def run_code(code: str, tests: list):
+    """Execute user code against provided tests."""
+    namespace = {}
+    try:
+        exec(code, namespace)
+    except Exception as e:
+        return None, f'Failed to execute code: {e}'
+    solve = namespace.get('solve')
+    if not callable(solve):
+        return None, "Define a callable 'solve' function"
+    results = []
+    passed = 0
+    for i, case in enumerate(tests, start=1):
+        args = case.get('input', [])
+        expected = case.get('output')
+        try:
+            start = time.perf_counter()
+            result = solve(*args)
+            duration = time.perf_counter() - start
+            ok = result == expected
+        except Exception as e:
+            results.append({'test': i, 'error': str(e)})
+            continue
+        if ok:
+            passed += 1
+        results.append({'test': i, 'result': result, 'expected': expected, 'pass': ok, 'time': duration})
+    return {'passed': passed, 'total': len(tests), 'results': results}, None
+
+
 @app.route('/api/problems')
 def api_problems():
     return jsonify(list_problems())
@@ -37,30 +76,24 @@ def api_evaluate():
     if not problem or problem not in list_problems():
         return jsonify({'error': 'Invalid problem'}), 400
     tests = load_tests(problem)
-    # Execute user code in isolated namespace
-    namespace = {}
-    try:
-        exec(code, namespace)
-    except Exception as e:
-        return jsonify({'error': f'Failed to execute code: {e}'})
-    solve = namespace.get('solve')
-    if not callable(solve):
-        return jsonify({'error': "Define a callable 'solve' function"})
-    results = []
-    passed = 0
-    for i, case in enumerate(tests, start=1):
-        args = case.get('input', [])
-        expected = case.get('output')
-        try:
-            result = solve(*args)
-            ok = result == expected
-        except Exception as e:
-            results.append({'test': i, 'error': str(e)})
-            continue
-        if ok:
-            passed += 1
-        results.append({'test': i, 'result': result, 'expected': expected, 'pass': ok})
-    return jsonify({'passed': passed, 'total': len(tests), 'results': results})
+    result, error = run_code(code, tests)
+    if error:
+        return jsonify({'error': error})
+    return jsonify(result)
+
+
+@app.route('/api/submit', methods=['POST'])
+def api_submit():
+    data = request.get_json(force=True)
+    problem = data.get('problem')
+    code = data.get('code', '')
+    if not problem or problem not in list_problems():
+        return jsonify({'error': 'Invalid problem'}), 400
+    tests = load_submit_tests(problem)
+    result, error = run_code(code, tests)
+    if error:
+        return jsonify({'error': error})
+    return jsonify(result)
 
 
 @app.route('/')

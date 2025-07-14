@@ -20,7 +20,10 @@ Whether you’re on a flight, in a remote location, or just want a distraction-f
 * ✅ Problem sets with detailed solutions and discussions
 * ✅ Test case evaluation with runtime & memory profiling
 * ✅ Python solution evaluation
-* ✅ Clean, offline-capable browser UI
+* ✅ Clean, offline-capable browser UI with CodeMirror editor
+* ✅ Selectable editor themes
+* ✅ Basic multi-language selector (Python supported)
+* ✅ Separate Test and Submit flows with additional hidden tests
 * ✅ Customizable problem lists for focused drills
 
 ## 📦 Installation
