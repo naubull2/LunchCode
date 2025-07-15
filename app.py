@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+import markdown
 import json
 import os
 import time
@@ -105,8 +106,9 @@ def index():
 def problem_page(name):
     if name not in list_problems():
         return 'Problem not found', 404
-    description = load_description(name)
-    return render_template('problem.html', problem=name, description=description)
+    description_md = load_description(name)
+    description_html = markdown.markdown(description_md)
+    return render_template('problem.html', problem=name, description=description_html)
 
 
 if __name__ == '__main__':
