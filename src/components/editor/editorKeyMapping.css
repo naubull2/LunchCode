@@ -1,0 +1,35 @@
+/* Styles for the editor keymapping features */
+
+.vim-status-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  padding: 0 5px;
+  background-color: var(--vim-bg, #1e1e1e);
+  color: var(--vim-text, #d4d4d4);
+  font-size: 12px;
+  line-height: 20px;
+  z-index: 10;
+  font-family: monospace;
+  display: flex;
+  align-items: center;
+}
+
+/* Set dark theme colors */
+html.dark .vim-status-bar {
+  --vim-bg: #1e1e1e;
+  --vim-text: #d4d4d4;
+}
+
+/* Set light theme colors */
+html:not(.dark) .vim-status-bar {
+  --vim-bg: #f3f3f3;
+  --vim-text: #333333;
+}
+
+/* Add some bottom margin to make room for the status bar */
+.monaco-editor .margin {
+  margin-bottom: 20px;
+}
