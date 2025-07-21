@@ -24,6 +24,7 @@ A local, LeetCode-like application for focused coding practice. Test your soluti
 
 - Node.js (v16+)
 - npm
+- Python (v3.8+) (for Python code execution)
 - Java Development Kit (JDK) (for Java code execution)
 
 ### Installation & Running
