@@ -47,6 +47,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </Link>
             <nav className="flex items-center space-x-4">
               <NavLink to="/" label="Problems" />
+              <NavLink to="/progress" label="Progress" />
             </nav>
           </div>
           <div className="flex items-center space-x-4">

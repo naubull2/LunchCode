@@ -118,10 +118,17 @@ function twoSum(nums, target) {
     // Write your code here
     
 };`,
-      python: `class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        # Write your code here
-        pass`,
+      python: `from typing import List
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+def two_sum(nums: List[int], target: int) -> List[int]:
+    # Write your code here
+    pass
+`,
       java: `class Solution {
     public int[] twoSum(int[] nums, int target) {
         // Write your code here
@@ -262,9 +269,16 @@ export const getProblemById = (id: string): Problem | undefined => {
 };
 
 // User progress management
+export interface Submission {
+  language: string;
+  code: string;
+  timestamp: number;
+  success: boolean;
+}
+
 export interface UserProgress {
   solvedProblems: Record<string, boolean>;
-  submissions: Record<string, { language: string; code: string; timestamp: number }[]>;
+  submissions: Record<string, Submission[]>;
 }
 
 // Get user progress from local storage
@@ -296,8 +310,35 @@ export const markProblemAsSolved = (problemId: string): void => {
   saveUserProgress(progress);
 };
 
+// --- Last Code Persistence ---
+
+const LAST_CODE_KEY = 'lunchCode_lastCode';
+
+export const saveLastCode = (problemId: string, language: string, code: string) => {
+  try {
+    const lastCodeData = JSON.parse(localStorage.getItem(LAST_CODE_KEY) || '{}');
+    if (!lastCodeData[problemId]) {
+      lastCodeData[problemId] = {};
+    }
+    lastCodeData[problemId][language] = code;
+    localStorage.setItem(LAST_CODE_KEY, JSON.stringify(lastCodeData));
+  } catch (error) {
+    console.error('Failed to save last code:', error);
+  }
+};
+
+export const getLastCode = (problemId: string, language: string): string | null => {
+  try {
+    const lastCodeData = JSON.parse(localStorage.getItem(LAST_CODE_KEY) || '{}');
+    return lastCodeData[problemId]?.[language] || null;
+  } catch (error) {
+    console.error('Failed to get last code:', error);
+    return null;
+  }
+};
+
 // Save a submission
-export const saveSubmission = (problemId: string, language: string, code: string): void => {
+export const saveSubmission = (problemId: string, language: string, code: string, success: boolean): void => {
   const progress = getUserProgress();
   if (!progress.submissions[problemId]) {
     progress.submissions[problemId] = [];
@@ -306,7 +347,8 @@ export const saveSubmission = (problemId: string, language: string, code: string
   progress.submissions[problemId].push({
     language,
     code,
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    success
   });
   
   saveUserProgress(progress);
@@ -319,6 +361,27 @@ export const isProblemSolved = (problemId: string): boolean => {
 };
 
 // Reset all progress
+// --- Language Persistence ---
+
+const LAST_LANGUAGE_KEY = 'lunchCode_lastLanguage';
+
+export const saveLastLanguage = (language: string): void => {
+  try {
+    localStorage.setItem(LAST_LANGUAGE_KEY, language);
+  } catch (error) {
+    console.error('Failed to save last language:', error);
+  }
+};
+
+export const getLastLanguage = (): string | null => {
+  try {
+    return localStorage.getItem(LAST_LANGUAGE_KEY);
+  } catch (error) {
+    console.error('Failed to get last language:', error);
+    return null;
+  }
+};
+
 export const resetAllProgress = (): void => {
   saveUserProgress({
     solvedProblems: {},
