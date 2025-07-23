@@ -120,11 +120,6 @@ function twoSum(nums, target) {
 };`,
       python: `from typing import List
 
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
 def two_sum(nums: List[int], target: int) -> List[int]:
     # Write your code here
     pass
@@ -298,11 +293,24 @@ export const getUserProgress = (): UserProgress => {
   };
 };
 
+// Clear user progress from local storage
+export const clearUserProgress = (): void => {
+  // 1. Clear the main progress object (submissions and solved status)
+  localStorage.removeItem('lunchcode_user_progress');
+
+  // 2. Clear all last saved codes for all problems
+  localStorage.removeItem(LAST_CODE_KEY);
+
+  // 3. Clear last used language
+  localStorage.removeItem(LAST_LANGUAGE_KEY);
+};  // Optionally, you might want to reload or update the state of the app after this
+
 // Save user progress to local storage
 export const saveUserProgress = (progress: UserProgress): void => {
   localStorage.setItem('lunchcode_user_progress', JSON.stringify(progress));
 };
 
+// ... (rest of the code remains the same)
 // Mark a problem as solved
 export const markProblemAsSolved = (problemId: string): void => {
   const progress = getUserProgress();
