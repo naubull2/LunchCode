@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import MainLayout from '../components/layout/MainLayout';
 import { useTheme } from '../utils/ThemeContext';
 import { getUserProgress, problems, Submission } from '../data/problemsData';
+import SubmissionHeatmap from '../components/SubmissionHeatmap';
 
 const ProgressPage: React.FC = () => {
   const { theme } = useTheme();
@@ -113,6 +114,11 @@ const ProgressPage: React.FC = () => {
             <h2 className="text-xl font-semibold mb-2">Total Submissions</h2>
             <p className="text-4xl font-bold">{allSubmissions.length}</p>
           </div>
+        </div>
+
+        {/* Submission Heatmap */}
+        <div className="mb-8">
+          <SubmissionHeatmap />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
