@@ -1,61 +1,66 @@
 # LunchCode
+Your offline coding interview prep companion
 
-A local, LeetCode-like application for focused coding practice. Test your solutions in multiple languages, track your progress with an interactive dashboard, and pick up right where you left off. All your data stays on your machine.
+LunchCode is a lightweight, self-hosted platform for practicing coding interview problems offline. Inspired by NeetCode and LeetCode, it focuses on providing a clean, distraction-free environment to help you master core problem-solving patterns.
+
+## 🚀 Why LunchCode?
+*   📦 **Self-contained & Offline**: Clone, install, and run locally. All your progress and submissions are saved in your browser.
+*   🧑‍💻 **Multi-language Support**: A user interface that supports practicing in JavaScript, Python, Java, and C++.
+*   📊 **Interactive Dashboard**: Track your progress with an overview of solved problems, success rates by tag, and a GitHub-style submission heatmap.
+*   🌐 **Modern Browser-based UI**: A clean and responsive interface built with React and TailwindCSS.
+*   🔁 **Focused Practice**: A curated set of problems to help you focus on key patterns.
 
 ## ✨ Features
+*   **Problem Sets**: A collection of classic interview problems with descriptions, examples, and starter code.
+*   **Advanced Code Editor**: Powered by Monaco (the engine behind VS Code), featuring syntax highlighting and optional Vim/Emacs keybindings.
+*   **Progress Tracking**:
+    *   View solved problems by difficulty.
+    *   Analyze success rates by tag to find your strengths and weaknesses.
+    *   Visualize your coding consistency with a daily submission heatmap.
+*   **Persistent Sessions**: Your last code attempt for each problem and language is automatically saved.
+*   **100% Local**: All data is stored in your browser's local storage.
+*   **Light/Dark Mode**: Switch themes for comfortable viewing.
 
-- **Multi-Language Playground**: Write and execute code in JavaScript, Python, and Java, with a secure local backend providing instant feedback.
-- **Advanced Code Editor**: Powered by Monaco (the engine behind VS Code), featuring syntax highlighting and optional Vim/Emacs keybindings.
-- **Progress Dashboard**: Get a clear view of your progress with stats on solved problems and a breakdown by difficulty.
-- **Success Rate by Tag**: Identify your strengths and weaknesses with a sortable and paginated view of your success rates per tag.
-- **Persistent Sessions**: Your last code attempt for each problem and language is automatically saved. The app also remembers your last-used language globally.
-- **100% Local**: All problems, submissions, and progress data are stored in your browser's local storage. No internet connection required after setup.
+> *Note: Code execution currently only supported in Javascript, Java, Python. C++ support maybe in the future*
 
-## 🛠️ Tech Stack
+## 📦 Installation
 
-- **Frontend**: React, TypeScript, TailwindCSS, Redux Toolkit
-- **Backend**: Node.js, Express
-- **Code Editor**: Monaco Editor
-- **Local Storage**: Data persisted via Browser LocalStorage API
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/naubull2/LunchCode.git
+    cd LunchCode
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    cd server
+    npm install
+    ```
+3.  **Run the main server:**
+    ```bash
+    npm start
+    ```
+    In another shell, you should also start the backend server for code execution.
+    ```bash
+    cd server
+    npm start
+    ```
 
-## 🚀 Getting Started
+4.  **Open the app:**
+    Access LunchCode in your browser at the URL provided (usually `http://localhost:3000`).
 
-### Prerequisites
+## 💡 Vision
+You don’t need to solve 500+ problems to succeed in interviews. Master the key patterns, and you’ll adapt to any variation thrown at you.
 
-- Node.js (v16+)
-- npm
-- Python (v3.8+) (for Python code execution)
-- Java Development Kit (JDK) (for Java code execution)
+LunchCode helps you do just that — efficiently, offline, and at your own pace.
 
-### Installation & Running
+## 📜 License
+MIT License.
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/naubull2/LunchCode.git
-   cd LunchCode
-   ```
+## 🙌 Contributing
+Contributions are welcome! See `CONTRIBUTING.md` (to be added).
 
-2. **Install frontend dependencies:**
-   ```bash
-   npm install
-   ```
+## 📫 Contact
+For ideas or feedback, open an issue or reach out via GitHub Discussions.
 
-3. **Install backend dependencies:**
-   ```bash
-   cd server
-   npm install
-   cd ..
-   ```
-
-4. **Run the development servers:**
-   - In one terminal, start the frontend (React app):
-     ```bash
-     npm run dev
-     ```
-   - In another terminal, start the backend (code execution engine):
-     ```bash
-     npm run server
-     ```
-
-5. **Open the app:**
-   Navigate to `http://localhost:3000` in your browser.
+Prep smarter. Practice offline. Ace your interviews. 🥗🍜
