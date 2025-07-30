@@ -3,11 +3,12 @@
   "title": "Palindrome Number",
   "difficulty": "easy",
   "tags": ["math"],
+  "description": "Given an integer `x`, return `true` if `x` is a palindrome, and `false` otherwise.\n\nA palindrome is a number that reads the same backward as forward. For example, 121 is a palindrome while 123 is not.",
   "examples": [
     {
-      "input": "x = 121",
-      "output": "true",
-      "explanation": "121 reads as 121 from left to right and from right to left."
+      "input": "x = 122",
+      "output": "false",
+      "explanation": "122 reads as 221 from left to right and from right to left."
     },
     {
       "input": "x = -121",
@@ -22,5 +23,6 @@
   ],
   "constraints": [
     "-2^31 <= x <= 2^31 - 1"
-  ]
+  ],
+  "followUp": "Could you solve it without converting the integer to a string?"
 }

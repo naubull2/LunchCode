@@ -1,30 +1,51 @@
-[
-  {
-    "input": { "x": 121 },
-    "expected": true
-  },
-  {
-    "input": { "x": -121 },
-    "expected": false
-  },
-  {
-    "input": { "x": 10 },
-    "expected": false
-  },
-  {
-    "input": { "x": 12321 },
-    "expected": true
-  },
-  {
-    "input": { "x": 1221 },
-    "expected": true
-  },
-  {
-    "input": { "x": 1234 },
-    "expected": false
-  },
-  {
-    "input": { "x": 0 },
-    "expected": true
-  }
-]
+{
+  "run": [
+    {
+      "input": { "x": 121 },
+      "expected": true,
+      "description": "Simple palindrome number"
+    },
+    {
+      "input": { "x": -121 },
+      "expected": false,
+      "description": "Negative number with palindrome digits but not a valid palindrome"
+    },
+    {
+      "input": { "x": 10 },
+      "expected": false,
+      "description": "Number ending with 0 (non-palindrome)"
+    }
+  ],
+  "submit": [
+    {
+      "input": { "x": 12321 },
+      "expected": true,
+      "description": "Larger odd-length palindrome"
+    },
+    {
+      "input": { "x": 1221 },
+      "expected": true,
+      "description": "Even-length palindrome"
+    },
+    {
+      "input": { "x": 1234 },
+      "expected": false,
+      "description": "Non-palindrome number"
+    },
+    {
+      "input": { "x": 0 },
+      "expected": true,
+      "description": "Edge case: zero"
+    },
+    {
+      "input": { "x": 2147483647 },
+      "expected": false,
+      "description": "Edge case: maximum 32-bit integer"
+    },
+    {
+      "input": { "x": -2147483648 },
+      "expected": false,
+      "description": "Edge case: minimum 32-bit integer"
+    }
+  ]
+}

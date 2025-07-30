@@ -72,28 +72,27 @@ const ProblemPage: React.FC = () => {
     setOutput({ type: 'info', message: 'Running your code...' });
 
     try {
-      const testCasesFromExamples = problem.examples.map((ex: any) => {
-        // This is a hacky parser for the 'two-sum' problem's string examples.
-        // A more robust solution would be to have structured examples in problemsData.ts
-        if (problem.id === 'two-sum') {
-          const [numsStr, targetStr] = ex.input.split(', target = ');
-          const nums = JSON.parse(numsStr.split(' = ')[1]);
-          const target = parseInt(targetStr, 10);
-          return { input: { nums, target }, expected: JSON.parse(ex.output) };
-        } else if (problem.id === 'is-palindrome') {
-          const x = parseInt(ex.input.split(' = ')[1], 10);
-          return { input: x, expected: ex.output === 'true' };
-        }
-        // Fallback for other problems - assumes examples are already structured
-        return ex;
-      });
+      // Import test cases from the JSON file
+      let testCases = [];
+      try {
+        const testCasesModule = await import(`../data/problems/${problem.id}/test-cases.json`);
+        testCases = testCasesModule.default?.run || [];
+      } catch (error) {
+        console.error('Error loading test cases:', error);
+        // Fallback to examples if test cases file is not found
+        testCases = problem.examples.map((ex: any) => ({
+          input: ex.input,
+          expected: ex.output,
+          description: ex.explanation || ''
+        }));
+      }
 
       saveLastCode(problem.id, language, code);
       saveLastLanguage(language);
       const result = await executeCode({
         language,
         code,
-        testCases: testCasesFromExamples,
+        testCases,
         problemId: problem.id,
       });
       setOutput({ type: 'run', data: result });
@@ -111,12 +110,27 @@ const ProblemPage: React.FC = () => {
     setOutput({ type: 'info', message: 'Evaluating your solution...' });
 
     try {
+      // Import test cases from the JSON file
+      let testCases = [];
+      try {
+        const testCasesModule = await import(`../data/problems/${problem.id}/test-cases.json`);
+        testCases = testCasesModule.default?.submit || [];
+      } catch (error) {
+        console.error('Error loading submit test cases:', error);
+        // Fallback to examples if test cases file is not found
+        testCases = problem.examples.map((ex: any) => ({
+          input: ex.input,
+          expected: ex.output,
+          description: ex.explanation || ''
+        }));
+      }
+
       saveLastCode(problem.id, language, code);
       saveLastLanguage(language);
       const result = await executeCode({
         language,
         code,
-        testCases: problem.testCases,
+        testCases,
         problemId: problem.id,
       });
 
