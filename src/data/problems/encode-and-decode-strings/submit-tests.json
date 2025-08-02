@@ -1,0 +1,29 @@
+[
+  {
+    "input": {
+      "strs": [
+        "hello",
+        "world"
+      ]
+    },
+    "expected": "5#hello5#world"
+  },
+  {
+    "input": {
+      "strs": [
+        ""
+      ]
+    },
+    "expected": "0#"
+  },
+  {
+    "input": {
+      "strs": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "expected": "1#a1#b1#c"
+  }
+]

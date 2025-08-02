@@ -1,0 +1,22 @@
+{
+  "id": "longest-increasing-subsequence",
+  "title": "Longest Increasing Subsequence",
+  "difficulty": "Medium",
+  "tags": [
+    "Array",
+    "Binary Search",
+    "Dynamic Programming"
+  ],
+  "description": "Given an integer array nums, return the length of the longest strictly increasing subsequence.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "nums = [10,9,2,5,3,7,101,18]",
+      "output": "4"
+    },
+    {
+      "input": "nums = [0,1,0,3,2,3]",
+      "output": "4"
+    }
+  ]
+}

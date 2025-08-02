@@ -1,48 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../utils/ThemeContext';
+import { useKeyMapping } from '../utils/KeyMappingContext';
 import MainLayout from '../components/layout/MainLayout';
 import ProblemView from '../components/problems/ProblemView';
 import CodeEditor from '../components/editor/CodeEditor';
-import { getProblemById, saveSubmission, markProblemAsSolved, saveLastCode, getLastCode, saveLastLanguage, getLastLanguage } from '../data/problemsData';
+import { saveSubmission, markProblemAsSolved, saveLastCode, getLastCode, saveLastLanguage, getLastLanguage, Problem } from '../data/problemsData';
+import { getProblemByIdFromFiles } from '../data/problemLoader';
 import { executeCode } from '../services/codeExecutionService';
 
 const ProblemPage: React.FC = () => {
   const { theme } = useTheme();
+  const { keyMapping, setKeyMapping } = useKeyMapping();
   const { problemId } = useParams<{ problemId: string }>();
   const navigate = useNavigate();
   
-  const [problem, setProblem] = useState<any>(null);
+  const [problem, setProblem] = useState<Problem | null>(null);
+  const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState(() => getLastLanguage() || 'javascript');
   const [code, setCode] = useState('');
-  const [keyMapping, setKeyMapping] = useState('default');
+
   const [output, setOutput] = useState<any>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Load saved user preferences from localStorage
-  useEffect(() => {
-    const savedKeyMapping = localStorage.getItem('lunchcode_keyMapping');
-    if (savedKeyMapping) {
-      setKeyMapping(savedKeyMapping);
-    }
-  }, []);
+
 
   // Fetch problem data based on URL param
   useEffect(() => {
-    if (problemId) {
-      const problemData = getProblemById(problemId);
-      if (problemData) {
-        setProblem(problemData);
-        // Initialize with default code for the selected language
-        if (problemData.starterCode && problemData.starterCode[language]) {
-          setCode(problemData.starterCode[language]);
+    const loadProblem = async () => {
+      if (problemId) {
+        setLoading(true);
+        try {
+          const problemData = await getProblemByIdFromFiles(problemId);
+          if (problemData) {
+            setProblem(problemData);
+            // Initialize with default code for the selected language
+            if (problemData.starterCode && problemData.starterCode[language]) {
+              setCode(problemData.starterCode[language]);
+            }
+          } else {
+            // Problem not found, redirect to problems list
+            navigate('/');
+          }
+        } catch (error) {
+          console.error('Failed to load problem:', error);
+          navigate('/');
+        } finally {
+          setLoading(false);
         }
-      } else {
-        // Problem not found, redirect to problems list
-        navigate('/');
       }
-    }
+    };
+    
+    loadProblem();
   }, [problemId, navigate, language]);
   
   useEffect(() => {
@@ -67,11 +77,7 @@ const ProblemPage: React.FC = () => {
     }
   };
 
-  const handleKeyMappingChange = (newKeyMapping: string) => {
-    setKeyMapping(newKeyMapping);
-    // Save the keymapping preference to localStorage
-    localStorage.setItem('lunchcode_keyMapping', newKeyMapping);
-  };
+
   
   const handleRun = async () => {
     if (!problem) return;
@@ -80,28 +86,27 @@ const ProblemPage: React.FC = () => {
     setOutput({ type: 'info', message: 'Running your code...' });
 
     try {
-      const testCasesFromExamples = problem.examples.map((ex: any) => {
-        // This is a hacky parser for the 'two-sum' problem's string examples.
-        // A more robust solution would be to have structured examples in problemsData.ts
-        if (problem.id === 'two-sum') {
-          const [numsStr, targetStr] = ex.input.split(', target = ');
-          const nums = JSON.parse(numsStr.split(' = ')[1]);
-          const target = parseInt(targetStr, 10);
-          return { input: { nums, target }, expected: JSON.parse(ex.output) };
-        } else if (problem.id === 'is-palindrome') {
-          const x = parseInt(ex.input.split(' = ')[1], 10);
-          return { input: x, expected: ex.output === 'true' };
-        }
-        // Fallback for other problems - assumes examples are already structured
-        return ex;
-      });
+      // Import dev test cases from the new dev-tests.json file
+      let testCases = [];
+      try {
+        const testCasesModule = await import(`../data/problems/${problem.id}/dev-tests.json`);
+        testCases = testCasesModule.default || [];
+      } catch (error) {
+        console.error('Error loading dev test cases:', error);
+        // Fallback to examples if test cases file is not found
+        testCases = problem.examples.map((ex: any) => ({
+          input: ex.input,
+          expected: ex.output,
+          description: ex.explanation || ''
+        }));
+      }
 
       saveLastCode(problem.id, language, code);
       saveLastLanguage(language);
       const result = await executeCode({
         language,
         code,
-        testCases: testCasesFromExamples,
+        testCases,
         problemId: problem.id,
       });
       setOutput({ type: 'run', data: result });
@@ -119,12 +124,27 @@ const ProblemPage: React.FC = () => {
     setOutput({ type: 'info', message: 'Evaluating your solution...' });
 
     try {
+      // Import submit test cases from the new submit-tests.json file
+      let testCases = [];
+      try {
+        const testCasesModule = await import(`../data/problems/${problem.id}/submit-tests.json`);
+        testCases = testCasesModule.default || [];
+      } catch (error) {
+        console.error('Error loading submit test cases:', error);
+        // Fallback to examples if test cases file is not found
+        testCases = problem.examples.map((ex: any) => ({
+          input: ex.input,
+          expected: ex.output,
+          description: ex.explanation || ''
+        }));
+      }
+
       saveLastCode(problem.id, language, code);
       saveLastLanguage(language);
       const result = await executeCode({
         language,
         code,
-        testCases: problem.testCases,
+        testCases,
         problemId: problem.id,
       });
 
@@ -160,10 +180,9 @@ const ProblemPage: React.FC = () => {
             <CodeEditor
               language={language}
               value={code}
-              keyMapping={keyMapping as 'default' | 'vim' | 'emacs'}
+              keyMapping={keyMapping}
               onChange={handleCodeChange}
               onLanguageChange={handleLanguageChange}
-              onKeyMappingChange={handleKeyMappingChange}
             />
           </div>
           
@@ -186,16 +205,19 @@ const ProblemPage: React.FC = () => {
                   {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
               </div>
-              <select 
-                value={language}
-                onChange={(e) => handleLanguageChange(e.target.value)}
-                className={`px-2 py-1 rounded text-sm ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'}`}
-              >
-                <option value="javascript">JavaScript</option>
-                <option value="python">Python</option>
-                <option value="java">Java</option>
-                <option value="cpp">C++</option>
-              </select>
+              <div>
+                <label htmlFor="key-mapping-select" className="sr-only">Key Mapping</label>
+                <select 
+                  id="key-mapping-select"
+                  value={keyMapping}
+                  onChange={(e) => setKeyMapping(e.target.value as 'default' | 'vim' | 'emacs')}
+                  className={`px-2 py-1 rounded text-sm ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-gray-800 border border-gray-300'}`}
+                >
+                  <option value="default">Default Keys</option>
+                  <option value="vim">Vim</option>
+                  <option value="emacs">Emacs</option>
+                </select>
+              </div>
             </div>
             <div className={`flex-1 p-3 font-mono text-sm overflow-auto whitespace-pre ${theme === 'dark' ? 'bg-gray-900 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>
               <OutputDisplay output={output} />

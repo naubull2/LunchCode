@@ -1,0 +1,23 @@
+[
+  {
+    "input": {
+      "s": "ADOBECODEBANC",
+      "t": "ABC"
+    },
+    "expected": "BANC"
+  },
+  {
+    "input": {
+      "s": "a",
+      "t": "a"
+    },
+    "expected": "a"
+  },
+  {
+    "input": {
+      "s": "a",
+      "t": "aa"
+    },
+    "expected": ""
+  }
+]

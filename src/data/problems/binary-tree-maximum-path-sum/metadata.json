@@ -1,0 +1,23 @@
+{
+  "id": "binary-tree-maximum-path-sum",
+  "title": "Binary Tree Maximum Path Sum",
+  "difficulty": "Hard",
+  "tags": [
+    "Dynamic Programming",
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree"
+  ],
+  "description": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "root = [1,2,3]",
+      "output": "6"
+    },
+    {
+      "input": "root = [-10,9,20,null,null,15,7]",
+      "output": "42"
+    }
+  ]
+}

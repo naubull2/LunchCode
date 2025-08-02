@@ -1,0 +1,20 @@
+[
+  {
+    "input": {
+      "s": "12"
+    },
+    "expected": 2
+  },
+  {
+    "input": {
+      "s": "226"
+    },
+    "expected": 3
+  },
+  {
+    "input": {
+      "s": "06"
+    },
+    "expected": 0
+  }
+]

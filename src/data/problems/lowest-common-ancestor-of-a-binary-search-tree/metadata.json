@@ -1,0 +1,23 @@
+{
+  "id": "lowest-common-ancestor-of-a-binary-search-tree",
+  "title": "Lowest Common Ancestor of a Binary Search Tree",
+  "difficulty": "Medium",
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Search Tree",
+    "Binary Tree"
+  ],
+  "description": "Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8",
+      "output": "6"
+    },
+    {
+      "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4",
+      "output": "2"
+    }
+  ]
+}

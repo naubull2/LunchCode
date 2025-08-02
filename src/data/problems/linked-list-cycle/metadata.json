@@ -1,0 +1,26 @@
+{
+  "id": "linked-list-cycle",
+  "title": "Linked List Cycle",
+  "difficulty": "Easy",
+  "tags": [
+    "Hash Table",
+    "Linked List",
+    "Two Pointers"
+  ],
+  "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "head = [3,2,0,-4], pos = 1",
+      "output": "true"
+    },
+    {
+      "input": "head = [1,2], pos = 0",
+      "output": "true"
+    },
+    {
+      "input": "head = [1], pos = -1",
+      "output": "false"
+    }
+  ]
+}

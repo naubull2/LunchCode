@@ -1,0 +1,19 @@
+{
+  "id": "implement-trie-prefix-tree",
+  "title": "Implement Trie (Prefix Tree)",
+  "difficulty": "Medium",
+  "tags": [
+    "Hash Table",
+    "String",
+    "Design",
+    "Trie"
+  ],
+  "description": "A trie (pronounced as \"try\") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. Implement the Trie class.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "['Trie', 'insert', 'search', 'search', 'startsWith', 'insert', 'search']",
+      "output": "[null, null, false, true, true, null, true]"
+    }
+  ]
+}

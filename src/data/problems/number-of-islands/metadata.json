@@ -1,0 +1,24 @@
+{
+  "id": "number-of-islands",
+  "title": "Number of Islands",
+  "difficulty": "Medium",
+  "tags": [
+    "Array",
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Union Find",
+    "Matrix"
+  ],
+  "description": "Given an m x n 2D binary grid grid which represents a map of \"1\"s (land) and \"0\"s (water), return the number of islands.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "grid = [[\"1\",\"1\",\"1\",\"1\",\"0\"],[\"1\",\"1\",\"0\",\"1\",\"0\"],[\"1\",\"1\",\"0\",\"0\",\"0\"],[\"0\",\"0\",\"0\",\"0\",\"0\"]]",
+      "output": "1"
+    },
+    {
+      "input": "grid = [[\"1\",\"1\",\"0\",\"0\",\"0\"],[\"1\",\"1\",\"0\",\"0\",\"0\"],[\"0\",\"0\",\"1\",\"0\",\"0\"],[\"0\",\"0\",\"0\",\"1\",\"1\"]]",
+      "output": "3"
+    }
+  ]
+}

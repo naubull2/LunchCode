@@ -1,0 +1,22 @@
+{
+  "id": "same-tree",
+  "title": "Same Tree",
+  "difficulty": "Easy",
+  "tags": [
+    "Tree",
+    "Depth-First Search",
+    "Binary Tree"
+  ],
+  "description": "Given the roots of two binary trees p and q, write a function to check if they are the same or not.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "p = [1,2,3], q = [1,2,3]",
+      "output": "true"
+    },
+    {
+      "input": "p = [1,2], q = [1,null,2]",
+      "output": "false"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "reverse-linked-list",
+  "title": "Reverse Linked List",
+  "difficulty": "Easy",
+  "tags": [
+    "Linked List",
+    "Recursion"
+  ],
+  "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "head = [1,2,3,4,5]",
+      "output": "[5,4,3,2,1]"
+    },
+    {
+      "input": "head = [1,2]",
+      "output": "[2,1]"
+    },
+    {
+      "input": "head = []",
+      "output": "[]"
+    }
+  ]
+}

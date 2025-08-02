@@ -1,0 +1,21 @@
+{
+  "id": "reverse-bits",
+  "title": "Reverse Bits",
+  "difficulty": "Easy",
+  "tags": [
+    "Divide and Conquer",
+    "Bit Manipulation"
+  ],
+  "description": "Reverse bits of a given 32 bits unsigned integer.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "n = 00000010100101000001111010011100",
+      "output": "964176192"
+    },
+    {
+      "input": "n = 11111111111111111111111111111101",
+      "output": "3221225471"
+    }
+  ]
+}

@@ -30,6 +30,10 @@ app.use(express.urlencoded({ extended: true }));
 // Initialize execution engine
 const executionEngine = new ExecutionEngine();
 
+// Import and use problem management routes
+const problemsRouter = require('./routes/problems');
+app.use('/api/problems', problemsRouter);
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });

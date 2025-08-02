@@ -1,0 +1,26 @@
+[
+  {
+    "input": {
+      "operations": [
+        "WordDictionary",
+        "addWord",
+        "addWord",
+        "addWord",
+        "search",
+        "search",
+        "search",
+        "search"
+      ]
+    },
+    "expected": [
+      null,
+      null,
+      null,
+      null,
+      false,
+      true,
+      true,
+      true
+    ]
+  }
+]

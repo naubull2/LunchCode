@@ -1,0 +1,22 @@
+[
+  {
+    "input": { "nums": [1, 2, 3, 4, 5], "target": 9 },
+    "expected": [3, 4]
+  },
+  {
+    "input": { "nums": [-1, -2, -3, -4, -5], "target": -8 },
+    "expected": [2, 4]
+  },
+  {
+    "input": { "nums": [0, 4, 3, 0], "target": 0 },
+    "expected": [0, 3]
+  },
+  {
+    "input": { "nums": [-3, 4, 3, 90], "target": 0 },
+    "expected": [0, 2]
+  },
+  {
+    "input": { "nums": [1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1], "target": 11 },
+    "expected": [5, 11]
+  }
+]

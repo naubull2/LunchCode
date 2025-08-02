@@ -1,0 +1,19 @@
+{
+  "id": "group-anagrams",
+  "title": "Group Anagrams",
+  "difficulty": "Medium",
+  "tags": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Sorting"
+  ],
+  "description": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+      "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]"
+    }
+  ]
+}

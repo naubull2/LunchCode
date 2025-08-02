@@ -1,0 +1,24 @@
+[
+  {
+    "input": {
+      "operations": [
+        "Trie",
+        "insert",
+        "search",
+        "search",
+        "startsWith",
+        "insert",
+        "search"
+      ]
+    },
+    "expected": [
+      null,
+      null,
+      false,
+      true,
+      true,
+      null,
+      true
+    ]
+  }
+]

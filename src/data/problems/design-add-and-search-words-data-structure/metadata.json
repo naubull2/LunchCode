@@ -1,0 +1,19 @@
+{
+  "id": "design-add-and-search-words-data-structure",
+  "title": "Design Add and Search Words Data Structure",
+  "difficulty": "Medium",
+  "tags": [
+    "String",
+    "Depth-First Search",
+    "Design",
+    "Trie"
+  ],
+  "description": "Design a data structure that supports adding new words and finding if a string matches any previously added string.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "['WordDictionary','addWord','addWord','addWord','search','search','search','search']",
+      "output": "[null,null,null,null,false,true,true,true]"
+    }
+  ]
+}

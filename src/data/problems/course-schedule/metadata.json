@@ -1,0 +1,23 @@
+{
+  "id": "course-schedule",
+  "title": "Course Schedule",
+  "difficulty": "Medium",
+  "tags": [
+    "Depth-First Search",
+    "Breadth-First Search",
+    "Graph",
+    "Topological Sort"
+  ],
+  "description": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0]]",
+      "output": "true"
+    },
+    {
+      "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+      "output": "false"
+    }
+  ]
+}

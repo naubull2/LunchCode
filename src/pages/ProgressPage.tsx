@@ -1,12 +1,30 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import MainLayout from '../components/layout/MainLayout';
 import { useTheme } from '../utils/ThemeContext';
-import { getUserProgress, problems, Submission } from '../data/problemsData';
+import { getUserProgress, getProblems, Submission, Problem } from '../data/problemsData';
 import SubmissionHeatmap from '../components/SubmissionHeatmap';
 
 const ProgressPage: React.FC = () => {
   const { theme } = useTheme();
   const progress = getUserProgress();
+  const [problems, setProblems] = useState<Problem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load problems asynchronously
+  useEffect(() => {
+    const loadProblems = async () => {
+      try {
+        const loadedProblems = await getProblems();
+        setProblems(loadedProblems);
+      } catch (error) {
+        console.error('Failed to load problems in ProgressPage:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadProblems();
+  }, []);
 
   // Calculate stats
   const totalProblems = problems.length;

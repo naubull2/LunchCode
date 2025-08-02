@@ -1,0 +1,25 @@
+{
+  "id": "word-break",
+  "title": "Word Break",
+  "difficulty": "Medium",
+  "tags": [
+    "Array",
+    "Hash Table",
+    "String",
+    "Dynamic Programming",
+    "Trie",
+    "Memoization"
+  ],
+  "description": "Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+      "output": "true"
+    },
+    {
+      "input": "s = \"applepenapple\", wordDict = [\"apple\",\"pen\"]",
+      "output": "true"
+    }
+  ]
+}
