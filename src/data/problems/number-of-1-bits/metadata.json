@@ -1,0 +1,25 @@
+{
+  "id": "number-of-1-bits",
+  "title": "Number of 1 Bits",
+  "difficulty": "Easy",
+  "tags": [
+    "Divide and Conquer",
+    "Bit Manipulation"
+  ],
+  "description": "Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "n = 11",
+      "output": "3"
+    },
+    {
+      "input": "n = 128",
+      "output": "1"
+    },
+    {
+      "input": "n = 4294967293",
+      "output": "31"
+    }
+  ]
+}

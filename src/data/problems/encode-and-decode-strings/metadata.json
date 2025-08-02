@@ -1,0 +1,22 @@
+{
+  "id": "encode-and-decode-strings",
+  "title": "Encode and Decode Strings",
+  "difficulty": "Medium",
+  "tags": [
+    "Array",
+    "String",
+    "Design"
+  ],
+  "description": "Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "strs = [\"hello\",\"world\"]",
+      "output": "\"5#hello5#world\""
+    },
+    {
+      "input": "strs = [\"\"]",
+      "output": "\"0#\""
+    }
+  ]
+}

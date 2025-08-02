@@ -1,0 +1,14 @@
+[
+  {
+    "input": {
+      "s": "babad"
+    },
+    "expected": "bab"
+  },
+  {
+    "input": {
+      "s": "cbbd"
+    },
+    "expected": "bb"
+  }
+]

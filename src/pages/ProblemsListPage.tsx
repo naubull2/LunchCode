@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../utils/ThemeContext';
 import MainLayout from '../components/layout/MainLayout';
-import { useProblems, isProblemSolved } from '../data/problemsService';
+import { getProblems, isProblemSolved, Problem } from '../data/problemsData';
 
 // Define the problem interface we'll use for display
 interface ProblemListItem {
@@ -19,15 +19,33 @@ const ProblemsListPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   
-  // Use our new hook to get problems
-  const { problems, loading, error } = useProblems();
+  // Load problems asynchronously
+  const [problems, setProblems] = useState<Problem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   
   // Transform problems with solved status when they load
   const [problemsList, setProblemsList] = useState<ProblemListItem[]>([]);
   
+  // Load problems on component mount
+  useEffect(() => {
+    const loadProblems = async () => {
+      try {
+        const loadedProblems = await getProblems();
+        setProblems(loadedProblems);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('Failed to load problems'));
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadProblems();
+  }, []);
+  
   useEffect(() => {
     if (problems && problems.length > 0) {
-      const enhancedProblems = problems.map(problem => ({
+      const enhancedProblems = problems.map((problem: Problem) => ({
         id: problem.id,
         title: problem.title,
         difficulty: problem.difficulty,
@@ -63,7 +81,16 @@ const ProblemsListPage: React.FC = () => {
   return (
     <MainLayout>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-6">Problems</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Problems</h1>
+          <Link
+            to="/add-problem"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition-colors duration-200 flex items-center gap-2"
+          >
+            <span>➕</span>
+            Create Problem
+          </Link>
+        </div>
         
         <div className="flex flex-col md:flex-row gap-4 mb-6">
           <div className="w-full md:w-1/3">

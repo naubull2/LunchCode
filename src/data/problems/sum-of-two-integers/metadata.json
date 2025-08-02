@@ -1,0 +1,21 @@
+{
+  "id": "sum-of-two-integers",
+  "title": "Sum of Two Integers",
+  "difficulty": "Medium",
+  "tags": [
+    "Math",
+    "Bit Manipulation"
+  ],
+  "description": "Given two integers a and b, return the sum of the two integers without using the operators + and -.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "a = 1, b = 2",
+      "output": "3"
+    },
+    {
+      "input": "a = 2, b = 3",
+      "output": "5"
+    }
+  ]
+}

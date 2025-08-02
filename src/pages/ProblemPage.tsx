@@ -5,7 +5,8 @@ import { useKeyMapping } from '../utils/KeyMappingContext';
 import MainLayout from '../components/layout/MainLayout';
 import ProblemView from '../components/problems/ProblemView';
 import CodeEditor from '../components/editor/CodeEditor';
-import { getProblemById, saveSubmission, markProblemAsSolved, saveLastCode, getLastCode, saveLastLanguage, getLastLanguage } from '../data/problemsData';
+import { saveSubmission, markProblemAsSolved, saveLastCode, getLastCode, saveLastLanguage, getLastLanguage, Problem } from '../data/problemsData';
+import { getProblemByIdFromFiles } from '../data/problemLoader';
 import { executeCode } from '../services/codeExecutionService';
 
 const ProblemPage: React.FC = () => {
@@ -14,7 +15,8 @@ const ProblemPage: React.FC = () => {
   const { problemId } = useParams<{ problemId: string }>();
   const navigate = useNavigate();
   
-  const [problem, setProblem] = useState<any>(null);
+  const [problem, setProblem] = useState<Problem | null>(null);
+  const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState(() => getLastLanguage() || 'javascript');
   const [code, setCode] = useState('');
 
@@ -26,19 +28,31 @@ const ProblemPage: React.FC = () => {
 
   // Fetch problem data based on URL param
   useEffect(() => {
-    if (problemId) {
-      const problemData = getProblemById(problemId);
-      if (problemData) {
-        setProblem(problemData);
-        // Initialize with default code for the selected language
-        if (problemData.starterCode && problemData.starterCode[language]) {
-          setCode(problemData.starterCode[language]);
+    const loadProblem = async () => {
+      if (problemId) {
+        setLoading(true);
+        try {
+          const problemData = await getProblemByIdFromFiles(problemId);
+          if (problemData) {
+            setProblem(problemData);
+            // Initialize with default code for the selected language
+            if (problemData.starterCode && problemData.starterCode[language]) {
+              setCode(problemData.starterCode[language]);
+            }
+          } else {
+            // Problem not found, redirect to problems list
+            navigate('/');
+          }
+        } catch (error) {
+          console.error('Failed to load problem:', error);
+          navigate('/');
+        } finally {
+          setLoading(false);
         }
-      } else {
-        // Problem not found, redirect to problems list
-        navigate('/');
       }
-    }
+    };
+    
+    loadProblem();
   }, [problemId, navigate, language]);
   
   useEffect(() => {
@@ -72,13 +86,13 @@ const ProblemPage: React.FC = () => {
     setOutput({ type: 'info', message: 'Running your code...' });
 
     try {
-      // Import test cases from the JSON file
+      // Import dev test cases from the new dev-tests.json file
       let testCases = [];
       try {
-        const testCasesModule = await import(`../data/problems/${problem.id}/test-cases.json`);
-        testCases = testCasesModule.default?.run || [];
+        const testCasesModule = await import(`../data/problems/${problem.id}/dev-tests.json`);
+        testCases = testCasesModule.default || [];
       } catch (error) {
-        console.error('Error loading test cases:', error);
+        console.error('Error loading dev test cases:', error);
         // Fallback to examples if test cases file is not found
         testCases = problem.examples.map((ex: any) => ({
           input: ex.input,
@@ -110,11 +124,11 @@ const ProblemPage: React.FC = () => {
     setOutput({ type: 'info', message: 'Evaluating your solution...' });
 
     try {
-      // Import test cases from the JSON file
+      // Import submit test cases from the new submit-tests.json file
       let testCases = [];
       try {
-        const testCasesModule = await import(`../data/problems/${problem.id}/test-cases.json`);
-        testCases = testCasesModule.default?.submit || [];
+        const testCasesModule = await import(`../data/problems/${problem.id}/submit-tests.json`);
+        testCases = testCasesModule.default || [];
       } catch (error) {
         console.error('Error loading submit test cases:', error);
         // Fallback to examples if test cases file is not found

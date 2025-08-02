@@ -1,0 +1,21 @@
+{
+  "id": "palindromic-substrings",
+  "title": "Palindromic Substrings",
+  "difficulty": "Medium",
+  "tags": [
+    "String",
+    "Dynamic Programming"
+  ],
+  "description": "Given a string s, return the number of palindromic substrings in it.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "s = \"abc\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"aaa\"",
+      "output": "6"
+    }
+  ]
+}

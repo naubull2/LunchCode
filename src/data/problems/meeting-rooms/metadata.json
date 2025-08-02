@@ -1,0 +1,21 @@
+{
+  "id": "meeting-rooms",
+  "title": "Meeting Rooms",
+  "difficulty": "Easy",
+  "tags": [
+    "Array",
+    "Sorting"
+  ],
+  "description": "Given an array of meeting time intervals where intervals[i] = [starti, endi], determine if a person could attend all meetings.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "false"
+    },
+    {
+      "input": "intervals = [[7,10],[2,4]]",
+      "output": "true"
+    }
+  ]
+}

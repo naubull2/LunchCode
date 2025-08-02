@@ -1,0 +1,34 @@
+[
+  {
+    "input": { "x": 0 },
+    "expected": true
+  },
+  {
+    "input": { "x": 1221 },
+    "expected": true
+  },
+  {
+    "input": { "x": 12321 },
+    "expected": true
+  },
+  {
+    "input": { "x": 1234321 },
+    "expected": true
+  },
+  {
+    "input": { "x": 1000021 },
+    "expected": false
+  },
+  {
+    "input": { "x": 1234567890 },
+    "expected": false
+  },
+  {
+    "input": { "x": -2147447412 },
+    "expected": false
+  },
+  {
+    "input": { "x": 2147447412 },
+    "expected": false
+  }
+]

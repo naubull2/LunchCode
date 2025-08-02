@@ -1,0 +1,25 @@
+{
+  "id": "decode-ways",
+  "title": "Decode Ways",
+  "difficulty": "Medium",
+  "tags": [
+    "String",
+    "Dynamic Programming"
+  ],
+  "description": "A message containing letters from A-Z can be encoded into numbers using the following mapping: \"A\" -> \"1\", \"B\" -> \"2\", ..., \"Z\" -> \"26\". To decode an encoded message, all the digits must be grouped then mapped back into letters.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "s = \"12\"",
+      "output": "2"
+    },
+    {
+      "input": "s = \"226\"",
+      "output": "3"
+    },
+    {
+      "input": "s = \"06\"",
+      "output": "0"
+    }
+  ]
+}

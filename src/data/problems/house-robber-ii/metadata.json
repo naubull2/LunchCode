@@ -1,0 +1,25 @@
+{
+  "id": "house-robber-ii",
+  "title": "House Robber II",
+  "difficulty": "Medium",
+  "tags": [
+    "Array",
+    "Dynamic Programming"
+  ],
+  "description": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one.",
+  "constraints": [],
+  "examples": [
+    {
+      "input": "nums = [2,3,2]",
+      "output": "3"
+    },
+    {
+      "input": "nums = [1,2,3,1]",
+      "output": "4"
+    },
+    {
+      "input": "nums = [1,2,3]",
+      "output": "3"
+    }
+  ]
+}

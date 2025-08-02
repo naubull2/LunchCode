@@ -19,10 +19,20 @@ class JavaScriptExecutor {
       });
 
       try {
-        // Prepare the arguments for the function call
-        const args = Array.isArray(testCase.input) 
-          ? testCase.input.map(arg => JSON.stringify(arg)).join(',') 
-          : JSON.stringify(testCase.input);
+        // Prepare the arguments for the function call by properly destructuring the test case input
+        let args;
+        if (Array.isArray(testCase.input)) {
+          // If input is already an array, use it directly
+          args = testCase.input.map(arg => JSON.stringify(arg)).join(',');
+        } else if (typeof testCase.input === 'object' && testCase.input !== null) {
+          // If input is an object, extract the values as separate parameters
+          // For example: {"nums": [2,7,11,15], "target": 9} becomes [2,7,11,15], 9
+          const values = Object.values(testCase.input);
+          args = values.map(arg => JSON.stringify(arg)).join(',');
+        } else {
+          // Single primitive value
+          args = JSON.stringify(testCase.input);
+        }
 
         // Convert problem ID from kebab-case to camelCase for the function name
         const funcName = problemId.replace(/-(\w)/g, (_, c) => c.toUpperCase());

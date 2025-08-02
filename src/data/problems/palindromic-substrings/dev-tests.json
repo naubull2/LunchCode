@@ -1,0 +1,14 @@
+[
+  {
+    "input": {
+      "s": "abc"
+    },
+    "expected": 3
+  },
+  {
+    "input": {
+      "s": "aaa"
+    },
+    "expected": 6
+  }
+]

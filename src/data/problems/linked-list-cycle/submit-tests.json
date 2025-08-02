@@ -1,0 +1,33 @@
+[
+  {
+    "input": {
+      "head": [
+        3,
+        2,
+        0,
+        -4
+      ],
+      "pos": 1
+    },
+    "expected": true
+  },
+  {
+    "input": {
+      "head": [
+        1,
+        2
+      ],
+      "pos": 0
+    },
+    "expected": true
+  },
+  {
+    "input": {
+      "head": [
+        1
+      ],
+      "pos": -1
+    },
+    "expected": false
+  }
+]
